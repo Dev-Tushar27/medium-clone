@@ -64,3 +64,4 @@ The new post will appear in the post list section
 Click on the post and it will redirect you to a different page where you will be able to view the full post 
 
 ![Alt text](medium-clone-5.png)
+
