@@ -8,7 +8,6 @@ import { signInWithPopup } from 'firebase/auth';
 import { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import PostModal from './PostModal.jsx';
-import { withDefaults } from 'vue';
 
 
 const customStyles ={
@@ -31,7 +30,7 @@ const Navbar = () => {
         link:'cursor-pointer',
         getStarted: 'cursor-pointer bg-[#000] hover:bg-[#808080] text-white  px-4 py-1 h-9 rounded-full'
     }
-    const [currUser, setCurrUser] = useState();
+    const [currUser, setCurrUser] = useState(null);
     const [open, setOpen] =  useState(false)
     const addUser = async (user)=>{
         await setDoc(doc(db,'users',user.email),{
@@ -42,15 +41,15 @@ const Navbar = () => {
         })
     }
     useEffect(()=>{
-        addUser
+        addUser;
     },[currUser]);
-    
+
     const handleClick = async()=>{
         const userData = await signInWithPopup(auth, provider);
         const user = userData.user
         console.log(user);
         setCurrUser(user);
-        addUser(user);
+        await addUser(user);
     }
     console.log(currUser);
     return (
@@ -62,28 +61,36 @@ const Navbar = () => {
                     <div className='flex justify-between font-semibold gap-10 py-6'>
                         <div className={styles.link}>Our Store</div>
                         <div className={styles.link}>Membership</div>
-                        <div className={styles.link} onClick={handleClick}>Sign In</div>
-                        <div className={styles.getStarted}>Get Started</div>
-                    </div>
-                ):(
-                    <div className='flex justify-between font-semibold gap-10 py-6'>
-                        <div className={styles.link}>Our Store</div>
-                        <div className={styles.link}>Membership</div>
                         <div onClick={()=>{setOpen(!open)}} className='cursor-pointer bg-[#000] text-white px-4 py-1 h-9 rounded-full hover:bg-[#808080]'>
                             <FaPen className='inline h-8 mr-2 py-1' />Write
                         </div>
                         <div className={styles.getStarted}>Get Started</div>
-                
+                    </div>
+                ):(
+                    
+                    <div className='flex justify-between font-semibold gap-10 py-6'>
+                        <div className={styles.link}>Our Store</div>
+                        <div className={styles.link}>Membership</div>
+                        <div className={styles.link} onClick={handleClick}>Sign In</div>
+                        <div className={styles.getStarted}>Get Started</div>
                     </div>
                     )
                 }
-            <Modal
+            {currUser? (<Modal
                 isOpen={open}
                 onRequestClose={()=> setOpen(!open)}
                 style={customStyles}
             >
-                <PostModal />
+                <PostModal author={currUser.displayName} authorImg={currUser.photoURL}/>
+            </Modal>):(
+                <Modal
+                isOpen={open}
+                onRequestClose={()=> setOpen(!open)}
+                style={customStyles}
+            >
+                Sign In first
             </Modal>
+            )}
         </div>
     )
 }

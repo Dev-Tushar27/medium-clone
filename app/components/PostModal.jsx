@@ -2,7 +2,7 @@ import React from 'react'
 import { setDoc, doc, collection, serverTimestamp, addDoc} from 'firebase/firestore';
 import {db,} from '../../firebase.js';
 import { useState } from 'react';
-const PostModal = () => {
+const PostModal = (props) => {
     const [body, setBody] = useState('');
     const [brief, setBrief] = useState('');
     const [title, setTitle] = useState('');
@@ -19,13 +19,17 @@ const PostModal = () => {
             postedOn: serverTimestamp(),
             postLen: Number(readTime),
             title: title,
-            author: '',
-            authorImg: 'props.authorImg',
+            author: props.author,
+            authorImg: props.authorImg,
         }) 
     }   
   return (
     <div className='w-full h-[50rem] flex flex-col items-center  gap-[1rem] py-[1rem] font-medium font-serif'>
         <div className='my-[2rem] font-bold text-4xl'>Add a post</div>
+        <div  className='flex w-[90rem]'>
+            <img src={props.authorImg} className='w-10 rounded-full' alt='author img'/> 
+            <div className='px-4 py-2 font-semibold'>{props.author}</div>
+        </div>
         <div  className='w-[90rem] border-2 border-black'>
             <input  className=' px-5 w-full' type='text' placeholder='Title' value={title} onChange={(e)=>{setTitle(e.target.value)}}/>
         </div>
