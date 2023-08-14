@@ -1,6 +1,4 @@
 import React from 'react'
-import Image from 'next/image'
-import author from 'public/author.jpg'
 import {FaEnvelope} from 'react-icons/fa';
 const Footer = ({post}) => {
   return (
