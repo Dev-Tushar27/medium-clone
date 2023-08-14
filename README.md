@@ -45,13 +45,13 @@ A new new entry intot he users collection is  made when a new user is registered
 
 In order to write a post into the database the user first need to sign in
 
-![Alt text](medium-clone-1.png)
+![Alt text](public/medium-clone-1.png)
 
-![Alt text](medium-clone-2.png)
+![Alt text](public/medium-clone-2.png)
 
 Then Click on the 'Write' icon in the navbar to write a new post. A new window will open 
 
-![Alt text](medium-clone-3.png)
+![Alt text](public/medium-clone-3.png)
 
 fill the fields with you data and click submit.
 
@@ -59,9 +59,9 @@ Close the window by clicking away from the window and refresh the page.
 
 The new post will appear in the post list section
 
-![Alt text](medium-clone-4.png)
+![Alt text](public/medium-clone-4.png)
 
 Click on the post and it will redirect you to a different page where you will be able to view the full post 
 
-![Alt text](medium-clone-5.png)
+![Alt text](public/medium-clone-5.png)
 
