@@ -1,7 +1,4 @@
 import React from 'react'
-import author from 'public/author.jpg';
-import thumbnail from 'public/thumbnail.webp';
-import Image from 'next/image';
 import {FaThumbsUp, FaComment,FaBookmark, FaShare} from 'react-icons/fa';
 
 const PostInfo = ({post}) => {
