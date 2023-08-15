@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import PostNav from '../components/PostNav';
 import PostInfo from '../components/PostInfo';
 import Footer from '../components/Footer.jsx';

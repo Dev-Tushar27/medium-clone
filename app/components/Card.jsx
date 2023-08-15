@@ -5,7 +5,7 @@ const Card = (props) => {
   const post = props.post
   return (
     <Link href={`/posts/${props.id}`}>
-    <div className='flex justify-between mt-10 sm:w-full sm:px-4 lg:w-1/2 lg:mt-20 lg:ml-28 mb-10  max-w-1/2 h-1/4'>
+    <div className='flex justify-between mt-10 sm:w-full sm:px-4 lg:w-1/2 lg:mt-20 lg:ml-28 mb-10 sm:mx-10 max-w-1/2 h-1/4'>
       <div className='flex flex-col justify-between w-full '>
         <div>
           <div className='text-1xl'>

@@ -20,7 +20,7 @@ const PostsList = () => {
         getPosts();
     },[])
     return (
-        <div>
+        <div id='Posts'>
             {
                 posts.map((post) =>{
                     return(

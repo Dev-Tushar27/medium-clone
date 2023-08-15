@@ -59,20 +59,14 @@ const Navbar = () => {
             </div>
                 {currUser ?(
                     <div className='flex justify-between font-semibold gap-10 py-6'>
-                        <div className={styles.link}>Our Store</div>
-                        <div className={styles.link}>Membership</div>
                         <div onClick={()=>{setOpen(!open)}} className='cursor-pointer bg-[#000] text-white px-4 py-1 h-9 rounded-full hover:bg-[#808080]'>
                             <FaPen className='inline h-8 mr-2 py-1' />Write
                         </div>
-                        <div className={styles.getStarted}>Get Started</div>
                     </div>
                 ):(
                     
                     <div className='flex justify-between font-semibold gap-10 py-6'>
-                        <div className={styles.link}>Our Store</div>
-                        <div className={styles.link}>Membership</div>
-                        <div className={styles.link} onClick={handleClick}>Sign In</div>
-                        <div className={styles.getStarted}>Get Started</div>
+                        <div className={styles.getStarted} onClick={handleClick}>Sign In</div>
                     </div>
                     )
                 }
