@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import Card from './Card'
 import { useState } from 'react'
 import { collection, getDocs} from 'firebase/firestore';
-import { db } from '@/firebase';
+import { db } from '../../firebaseConfig.js';
 const PostsList = () => {
     const [posts, setPosts] = useState([]);
     const getPosts = async ()=>{
@@ -18,20 +18,21 @@ const PostsList = () => {
     }
     useEffect(()=>{
         getPosts();
-    },[])
+    },[posts])
     return (
-        <div id='Posts'>
-            {
-                posts.map((post) =>{
-                    return(
-                        <Card 
-                            key={post.id} 
-                            id={String(post.id)}
-                            post={post.data}
-                        />
-                    )
-                })
-            }
+        <div className=''>
+        {
+            posts.map((post) =>{
+                return(
+                    <div key={post.id}>
+                    <Card 
+                        id={String(post.id)}
+                        post={post.data}
+                    />
+                    </div>
+                )
+            })
+        }
         </div>
         
     )

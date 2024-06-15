@@ -1,86 +1,73 @@
+"use client"
 import React from 'react'
-import logo from 'public/logo.png';
 import Image from 'next/image';
-import { setDoc, doc } from 'firebase/firestore';
-import { FaPen } from 'react-icons/fa';
-import {db, auth, provider, signIn} from '../../firebase.js';
-import { signInWithPopup } from 'firebase/auth';
-import { useState, useEffect } from 'react';
+import { FaPen, FaRegUser } from 'react-icons/fa';
+import { IoMdExit } from "react-icons/io";
+import { useState } from 'react';
 import Modal from 'react-modal';
 import PostModal from './PostModal.jsx';
+import { useRouter } from 'next/navigation';
+import { useAuth } from 'app/context/auth/index.jsx';
 
-
-const customStyles ={
-    content:{
-        margin:'2%',
-        transform:'transalte(-50%,-50%)',
-        backgroundColor: "#fff",
-        padding: 0,
-        border: 'none',
-        overflow: 'scroll',
-        width: '90%'
-    },
-    overlay:{
-        backgroundColor:'rgba(10,11,13,0.75)',
-    }
-}
 const Navbar = () => {
-
+    const {user, logOutUser} = useAuth();
+    
     const styles = {
         link:'cursor-pointer',
         getStarted: 'cursor-pointer bg-[#000] hover:bg-[#808080] text-white  px-4 py-1 h-9 rounded-full'
     }
-    const [currUser, setCurrUser] = useState(null);
-    const [open, setOpen] =  useState(false)
-    const addUser = async (user)=>{
-        await setDoc(doc(db,'users',user.email),{
-            email: user.email,
-            name: user.displayName,
-            imgUrl: user.photoURL,
-            followerCount: 0
-        })
-    }
-    useEffect(()=>{
-        addUser;
-    },[currUser]);
-
-    const handleClick = async()=>{
-        const userData = await signInWithPopup(auth, provider);
-        const user = userData.user
-        console.log(user);
-        setCurrUser(user);
-        await addUser(user);
-    }
-    console.log(currUser);
+    const [isOpen, setModalOpen] =  useState(false);
+    const [openMenu, setOpenMenu] =  useState(false);
+    const openModal = ()=>setModalOpen(true);
+    const closeModal = ()=>setModalOpen(false);
+    const router = useRouter();
     return (
-        <div className='px-10 font-sans flex justify-between w-full align-center bg-[#deae12] border-b-2 border-solid border-black'>
-            <div className='cursor-pointer'>
-                <Image src={logo} className='w-44 py-4' alt='' />
+        <div className='px-10 font-sans flex justify-between w-full items-center bg-white border-b-2 border-solid border-black'>
+            <div className='cursor-pointer hover:opacity-70 transition-all'>
+                <h1 className='text-3xl font-extrabold'>Blogs</h1>
             </div>
-                {currUser ?(
-                    <div className='flex justify-between font-semibold gap-10 py-6'>
-                        <div onClick={()=>{setOpen(!open)}} className='cursor-pointer bg-[#000] text-white px-4 py-1 h-9 rounded-full hover:bg-[#808080]'>
+                {user ?(
+                    <div className='flex justify-between items-center font-semibold gap-10 py-6'>
+                        <div onClick={openModal} className='cursor-pointer bg-[#000] text-white px-4 py-1 h-9 rounded-full hover:bg-[#808080]'>
                             <FaPen className='inline h-8 mr-2 py-1' />Write
                         </div>
+
+                        <div onClick={()=>{setOpenMenu(!openMenu)}}>
+                            <Image className="rounded-full" src={user.photoURL} width={50} height={100} alt='avatar' />
+                        </div>
+                        {openMenu && (
+                            <div className='absolute bg-slate-100 flex flex-col top-[10%] rounded-[10px] right-4 items-start w-[13rem] border-slate-300 border-2'>
+                                <div className="cursor-pointer hover:bg-white w-full px-4 py-2" >
+                                    <div className='flex gap-4' onClick={()=>{
+                                    logOutUser();
+                                    router.refresh();
+                                }}>
+                                        <IoMdExit className='inline h-8 mr-2 py-1' />LogOut
+                                    </div>
+                                </div>
+
+                        
+                                <div className="cursor-pointer hover:bg-white w-full px-4 py-2" onClick={()=>router.push('/user-info')}>
+                                    <div className='flex gap-4'>
+                                        <FaRegUser className='inline h-8 mr-2 py-1' /><h3>Account Info</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 ):(
                     
                     <div className='flex justify-between font-semibold gap-10 py-6'>
-                        <div className={styles.getStarted} onClick={handleClick}>Sign In</div>
+                        <div className={styles.getStarted} onClick={()=>{router.push('/signup')}}>Sign In</div>
                     </div>
                     )
                 }
-            {currUser? (<Modal
-                isOpen={open}
-                onRequestClose={()=> setOpen(!open)}
-                style={customStyles}
-            >
-                <PostModal author={currUser.displayName} authorImg={currUser.photoURL}/>
-            </Modal>):(
+            {user? (
+                <PostModal isOpen={isOpen} onRequestClose={closeModal} email={user.email} author={user.displayName} authorImg={user.photoURL}/>
+            ):(
                 <Modal
-                isOpen={open}
-                onRequestClose={()=> setOpen(!open)}
-                style={customStyles}
+                isOpen={isOpen}     
+                onRequestClose={closeModal}
             >
                 Sign In first
             </Modal>

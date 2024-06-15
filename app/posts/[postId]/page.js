@@ -1,11 +1,10 @@
 "use client"
-import PostNav from '../components/PostNav';
-import PostInfo from '../components/PostInfo';
-import Footer from '../components/Footer.jsx';
 import { collection, getDocs} from 'firebase/firestore';
-import { db } from '@/firebase';
+import { db } from '../../../firebaseConfig';
+import PostInfo from '../components/PostInfo';
 import { useState, useEffect } from 'react';
-const pages = ({params: {postId}}) => {
+import PostFooter from '../components/PostFooter';
+const Post = ({params: {postId}}) => {
   const [post, setPost] = useState({});
   const findPost = async()=>{
     const colRef = collection(db,'articles');
@@ -21,14 +20,12 @@ const pages = ({params: {postId}}) => {
     findPost();
   },[])
 
-  console.log(post);
   return (
     <div>
-      <PostNav />
-      <PostInfo post={post}/>
-      <Footer post={post}/>
+      <PostInfo post = {post}/>
+      <PostFooter post = {post} />
     </div>
   )
 }
 
-export default pages
+export default Post
