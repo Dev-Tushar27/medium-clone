@@ -1,9 +1,9 @@
 
-# Medium-clone
+# Blogs
 
 [Live demo](https://medium-clone-three-livid.vercel.app/)
 
-This project is a clone of the popular online publishing platform that allows writers and content creators to share their stories, articles, essays, and opinions with a wide audience.
+Blog post application for writers and content creators to share their stories, articles, essays, and opinions with a wide audience.
 
 # Next.js
 
