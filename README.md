@@ -1,7 +1,7 @@
 
 # Blogs
 
-[Live demo](https://medium-clone-three-livid.vercel.app/)
+[Live demo](https://blogs-gkfexx788-tushar27xs-projects.vercel.app/)
 
 Blog post application for writers and content creators to share their stories, articles, essays, and opinions with a wide audience.
 
